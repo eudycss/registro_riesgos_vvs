@@ -1,0 +1,112 @@
+<p-toast></p-toast>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-6 m-auto">
+      <div class="card">
+        <div class="card-header text-center">
+          <h4> <strong>ACCESO AL SISTEMA WEB SNGR</strong> </h4>
+      </div>
+    
+
+      <div class="card-body">
+
+        <div class="d-flex justify-content-center">
+         
+            <img  class="mx-auto mt-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwu3E46YqwQ8e9ySen_BHN5waxOBDc6FBodcse9MDiWManHKcmMb7MzntDWS6KxaFKZ88&usqp=CAU"alt="" >
+         
+      </div>
+
+      <div>
+        
+      </div>
+      
+
+        <div class="p-fluid p-grid">
+          <div class="p-col-12">
+            <label for="">Usuario</label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"><i class="fa fa-user bigicon"></i></span>
+              <input [(ngModel)]="login.username" type="text"   class="fa fa-user bigicon" pInputText placeholder="Ingrese su usuario" required>
+            </div>
+          </div>
+  
+          <div class="p-col-12">
+            <label for="">Contraseña</label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"  ><i class="fa fa-key bigicon"></i></span>
+              <input [(ngModel)]="login.password" type="password" pInputText placeholder="Ingrese su contraseña" required>
+            </div>
+          </div>
+          <div class="p-field p-col-12">
+            <button
+              icon="pi pi-check"
+              iconPos="left"
+              pButton
+              pRipple
+              type="button"
+              label="Ingresar"
+              class="p-button-primary"
+              [loading]="isLoading"
+              (click)="onLogin()"
+            ></button>
+          </div>
+          <div class="p-field p-col-6">
+            <button class="btn btn-primary btn-block"(click)="onShowModal()"  pButton pRipple type="button" label="Registrarse"  ></button>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+    
+  </div>
+
+</div>
+
+
+<p-dialog header="Registrar Usuario" [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="displayBasic" [style]="{width: '35vw'}" [baseZIndex]="10000" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-grid p-field">
+      <div class="p-col-6">
+        <label for="name">Nombre</label>
+        <input type="text" pInputText id="name" [(ngModel)]="userRegister.name" [ngClass]="{'ng-invalid ng-dirty': submittedRegister && !userRegister.name}" required autofocus />
+        <small class="p-error" *ngIf="submittedRegister && !userRegister.name">El nombre es requerido</small>
+      </div>
+      <div class="p-col-6">
+        <label for="lastname">Apellido</label>
+        <input type="text" pInputText [(ngModel)]="userRegister.lastname" [ngClass]="{'ng-invalid ng-dirty': submittedRegister && !userRegister.lastname}" id="lastname" required />
+        <small class="p-error" *ngIf="submittedRegister && !userRegister.lastname">El apellido es
+          requerido</small>
+      </div>
+    </div>
+    <div class="p-field">
+      <label for="email">Correo</label>
+      <input type="email" pInputText id="email" [(ngModel)]="userRegister.email" [ngClass]="{'ng-invalid ng-dirty': submittedRegister && !userRegister.email}" required />
+      <small class="p-error" *ngIf="submittedRegister && !userRegister.email">El email es requerido</small>
+    </div>
+    <div class="p-field">
+      <label for="username">Usuario (para acceder al sistema)</label>
+      <input type="text" pInputText id="username" [(ngModel)]="userRegister.username" [ngClass]="{'ng-invalid ng-dirty': submittedRegister && !userRegister.username}" required />
+      <small class="p-error" *ngIf="submittedRegister && !userRegister.username">El usuario es requerido</small>
+    </div>
+
+    <div class="p-field">
+      <label for="pass">Contraseña</label>
+      <input type="password" pInputText id="pass" [(ngModel)]="userRegister.password" [ngClass]="{'ng-invalid ng-dirty': submittedRegister && !userRegister.password}" required />
+      <small class="p-error" *ngIf="submittedRegister && !userRegister.password">La contraseña es
+        requerido</small>
+    </div>
+    <div class="p-field">
+      <label for="pass-confirm">Confirmación</label>
+      <input type="password" pInputText id="pass-confirm" [(ngModel)]="userRegister.confirmPassword" [ngClass]="{'ng-invalid ng-dirty': submittedRegister && !userRegister.confirmPassword}" required />
+      <small class="p-error" *ngIf="submittedRegister && !userRegister.confirmPassword">La contraseña es
+        requerido</small>
+    </div>
+    <small class="p-error" *ngIf="submittedRegister && userRegister.confirmPassword!==userRegister.password">La
+      contraseña no coinciden</small>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="onRegister()" label="Guardar" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+

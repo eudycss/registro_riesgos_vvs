@@ -1,0 +1,100 @@
+<app-menu></app-menu>
+<app-loading [loading]="isLoading"></app-loading>
+<div class="container p-d-flex p-jc-center p-pt-6">
+  <div class="p-col-12 p-lg-10">
+    <p-button
+      label="< Regresar"
+      styleClass="p-button-link"
+      (click)="onPrevious()"
+    >
+    </p-button>
+    <p-panel>
+      <p-header>
+        <strong>DETALLE DE RIESGO</strong>
+      </p-header>
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12">
+          <agm-map
+            [latitude]="lat"
+            [longitude]="lng"
+            [zoom]="zoom"
+          >
+            <agm-marker [latitude]="lat" [longitude]="lng">
+              <agm-info-window>
+                <strong>Mi Posición actual</strong>
+                <p>latitud: {{lat}}</p>
+                <p>longitud: {{lng}}</p>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map>
+          <h3>Longitud: {{lng}}</h3>
+          <h3>Latitud: {{lat}}</h3>
+        </div>
+
+
+        <div class="p-col-6">
+          <p-divider align="center">
+            <span class="p-tag">Detalle del riesgo</span>
+          </p-divider>
+          <p class="p-text-justify"><strong>Código: </strong>{{risk.code ? risk.code : 'Sin defenir' }}</p>
+          <p class="p-text-justify"><strong>Estado
+            actual: </strong>{{risk.status ? risk.status.code + ' - ' + risk.status.value : 'Sin defenir' }}</p>
+          <p class="p-text-justify"><strong>Notificación: </strong>{{risk.dateNotification | date}}</p>
+          <p class="p-text-justify"><strong>Descripción: </strong>{{risk.description}}</p>
+          <p class="p-text-justify"><strong>Tipo: </strong>{{risk.typeRisk ? risk.typeRisk.value : 'Sin definir'}}</p>
+          <p class="p-text-justify"><strong>Nivel: </strong>{{risk.levelRisk ? risk.levelRisk.value : 'Sin definir'}}
+          </p>
+          <p class="p-text-justify">
+            <strong>Ubicación: </strong>{{risk.country.value + ', ' + risk.province.value + ', ' + risk.canton.value}}
+          </p>
+          <p class="p-text-justify"><strong>Origen: </strong>{{risk.origenRisk ? risk.origenRisk.value : 'Sin definir'}}
+          </p>
+          <p class="p-text-justify"><strong>Unidad
+            Responsable: </strong>{{risk.respUnit ? risk.respUnit.value : 'Sin definir'}}</p>
+          <p class="p-text-justify"><strong>Unidad de
+            apoyo: </strong>{{risk.support ? risk.support.value : 'Sin definir'}}</p>
+          <p class="p-text-justify"><strong>Locación: </strong>{{risk.location}}</p>
+          <p class="p-text-justify"><strong>Zona: </strong>{{risk.zone}}</p>
+        </div>
+        <div class="p-col-6">
+          <p-divider align="center">
+            <span class="p-tag">Anexos</span>
+          </p-divider>
+          <label><strong>Anexos subidos: </strong></label>
+          <a
+            pButton
+            *ngFor="let file of risk.files; let i = index"
+            [label]="'Ver anexo '+ (i+1)"
+            class="p-button-link"
+            [href]="api+file.filename"
+            target="_blank"
+          >
+
+          </a>
+
+
+
+          <p *ngIf="risk.files.length == 0" class="p-text-center"><em>No se ha subido ningun anexo</em></p>
+
+          <p-divider align="center">
+            <span class="p-tag">Contacto</span>
+          </p-divider>
+
+
+          <p class="p-text-justify"><strong>Registrador: </strong>{{risk.username}}</p>
+          <p class="p-text-justify"><strong>Correo: </strong> {{risk.email}} </p>
+          <p class="p-text-justify"><strong>Teléfono: </strong> {{risk.phoneNumber}} </p>
+          <p class="p-text-justify"><strong>Creado por: </strong> {{risk.user.name + ' ' + risk.user.lastname}} </p>
+        </div>
+      </div>
+      <p-footer>
+        <p-button
+          label="< Regresar"
+          styleClass="p-button-link"
+          (click)="onPrevious()"
+        >
+        </p-button>
+      </p-footer>
+    </p-panel>
+  </div>
+</div>

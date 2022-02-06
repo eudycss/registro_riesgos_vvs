@@ -1,0 +1,232 @@
+<app-menu></app-menu>
+<p-toast></p-toast>
+<app-loading [loading]="isLoading"></app-loading>
+<div class="container p-d-flex p-jc-center p-pt-6">
+  <div class="p-col-12 p-lg-8">
+    <p-panel>
+      <p-header>
+        <strong>REGISTRO DE UN RIESGO</strong>
+      </p-header>
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12">
+          <p-divider align="center">
+            <span class="p-tag">Detalle del riesgo</span>
+          </p-divider>
+          <label for="risk-description">Descripción: </label>
+          <textarea
+            id="risk-description"
+            [(ngModel)]="risk.description"
+            placeholder="Descripción de riesgo"
+            pInputTextarea
+            rows="5"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.description}"
+          ></textarea>
+          <small class="p-error" *ngIf="submitted && !risk.description">Campo requerido</small>
+        </div>
+
+        <div class=" p-field p-col-12 p-lg-6">
+          <label for="risk-dates">Fecha: </label>
+
+          
+
+          <p-calendar
+         
+            [maxDate]="dateTime"
+            [monthNavigator]="true"
+            [(ngModel)]="risk.dateNotification"
+            placeholder="Fecha de notificación"
+            [yearNavigator]="true"
+            yearRange="2000:2022"
+            id="risk-dates"
+            inputId="risk-dates"
+            dateFormat="yy-mm-dd"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.dateNotification}">
+
+          </p-calendar>
+          <small class="p-error" *ngIf="submitted && !risk.dateNotification">Campo requerido</small>
+        </div>
+
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-type">Tipo de riesgo: </label>
+          <p-dropdown
+            id="risk-type"
+            inputId="risk-type"
+            [options]="riskTypes"
+            [(ngModel)]="risk.typeRisk"
+            optionLabel="value"
+            selectId="id"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="Seleccionar tipo de riesgo"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.typeRisk}"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="submitted && !risk.typeRisk">Campo requerido</small>
+        </div>
+
+
+        <p-divider class="p-col-12" align="center">
+          <span class="p-tag">Contacto del registrador</span>
+        </p-divider>
+
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-name">Nombre: </label>
+          <input id="risk-name" [(ngModel)]="userInfo.name" type="text" placeholder="Ingrese su nombre" pInputText
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && !userInfo.name}">
+          <small class="p-error" *ngIf="submitted && !userInfo.name">Campo requerido</small>
+        </div>
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-lastname">Apellido: </label>
+          <input id="risk-lastname" [(ngModel)]="userInfo.lastname" type="text" placeholder="Ingrese su apellido" pInputText
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && !userInfo.lastname}">
+          <small class="p-error" *ngIf="submitted && !userInfo.lastname">Campo requerido</small>
+        </div>
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-emails">Correo: </label>
+          <input id="risk-emails" [(ngModel)]="risk.email" type="email" placeholder="Ingrese su correo" pInputText
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.email}">
+          <small class="p-error" *ngIf="submitted && !risk.email">Campo requerido</small>
+        </div>
+
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-phone">Teléfono: </label>
+          <input id="risk-phone" [(ngModel)]="risk.phoneNumber" type="email" placeholder="Ingrese su teléfono" pInputText
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.phoneNumber}">
+          <small class="p-error" *ngIf="submitted && !risk.phoneNumber">Campo requerido</small>
+        </div>
+
+
+        <p-divider class="p-col-12" align="center">
+          <span class="p-tag">Anexos (Máximo 4 anexos)</span>
+        </p-divider>
+
+        <div class="p-field p-col-12">
+          <p-fileUpload
+            name="demo[]"
+            (onSelect)="onUpload($event)"
+            [multiple]="multiple"
+            [showCancelButton]="buttons"
+            [showUploadButton]="buttons"
+            [maxFileSize]="maxFileSize"
+            chooseLabel="Seleccionar"
+            [fileLimit]="4"
+            [auto]="false"
+          >
+            <ng-template pTemplate="content">
+              <p-tag *ngIf="files.length > 4" icon="pi pi-times" severity="danger" value="El número de archivos sobrepasa lo permitido"></p-tag>
+            </ng-template>
+
+<!--            <ng-template pTemplate="content">-->
+<!--              <ul *ngIf="uploadedFiles.length">-->
+<!--                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>-->
+<!--              </ul>-->
+<!--            </ng-template>-->
+          </p-fileUpload>
+          <small class="p-error" *ngIf="files.length > 4">El número de archivos es solo de 4</small>
+        </div>
+
+          <p-divider class="p-col-12" align="center">
+            <span class="p-tag">Ubicación del Riesgo</span>
+          </p-divider>
+
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-country">País: </label>
+          <p-dropdown
+            id="risk-country"
+            inputId="risk-country"
+            [options]="countries"
+            [(ngModel)]="risk.country"
+            optionLabel="value"
+            selectId="id"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="Seleccione un país"
+            [ngClass]="{'ng-invalid ng-dirty': submitted && risk.country==0}"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="submitted && !risk.country">Campo requerido</small>
+        </div>
+        <div class="p-field p-col-12 p-lg-6" [hidden]="risk.country !== 1">
+          <label for="risk-province">Provincia: </label>
+          <p-dropdown
+            id="risk-province"
+            inputId="risk-canton"
+            [options]="provinces"
+            [(ngModel)]="risk.province"
+            optionLabel="value"
+            selectId="id"
+            [showClear]="true"
+            placeholder="Seleccione una provincia"
+            optionValue="id"
+            (onChange)="onSelectProvince($event)"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="submitted && !risk.province">Campo requerido</small>
+        </div>
+
+        <div class="p-field p-col-12 p-lg-6" [hidden]="risk.country !== 1">
+          <label for="risk-canton">Canton: </label>
+          <p-dropdown
+            id="risk-canton"
+            inputId="risk-canton"
+            [options]="cantons"
+            [(ngModel)]="risk.canton"
+            optionLabel="value"
+            selectId="id"
+            optionValue="id"
+            [showClear]="true"
+            placeholder="Seleccione un canton"
+          ></p-dropdown>
+          <small class="p-error" *ngIf="submitted && !risk.canton">Campo requerido</small>
+        </div>
+
+
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-location">Locación: </label>
+          <input id="risk-location" [(ngModel)]="risk.location" type="text" placeholder="Ingrese la locación" pInputText
+                 [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.location}">
+          <small class="p-error" *ngIf="submitted && !risk.location">Campo requerido</small>
+        </div>
+
+        <div class="p-field p-col-12 p-lg-6">
+          <label for="risk-zone">Zona: </label>
+          <input
+            id="risk-zone"
+            [(ngModel)]="risk.zone"
+            placeholder="Ingrese la zona" type="text"
+            pInputText
+            [ngClass]="{'ng-invalid ng-dirty': submitted && !risk.location}"
+          >
+          <small class="p-error" *ngIf="submitted && !risk.zone">Campo requerido</small>
+        </div>
+
+        <p-divider class="p-col-12" align="center">
+          <span class="p-tag">Georeferenciación</span>
+        </p-divider>
+        <div class="p-field p-col-12">
+          <agm-map
+            [latitude]="lat"
+            [longitude]="lng"
+            [zoom]="zoom"
+            (mapReady)="mapReadyHandler($event)"
+          >
+            <agm-marker [latitude]="lat" [longitude]="lng">
+              <agm-info-window>
+                <strong>Mi Posición actual</strong>
+                <p>latitud: {{lat}}</p>
+                <p>longitud: {{lng}}</p>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map>
+          <h3>Longitud: {{lng}}</h3>
+          <h3>Latitud: {{lat}}</h3>
+        </div>
+      </div>
+      <p-footer>
+        <button pButton pRipple icon="pi pi-save" (click)="onSave()" type="button"
+                label="Save" class="p-button-primary p-col-12 p-md-2  p-mx-1 p-my-1" [loading]="isLoading"></button>
+        <button pButton pRipple icon="pi pi-times" type="button" (click)="onCancel()" label="Cancelar"
+                class="p-button-danger p-col-12 p-md-2 p-mx-1 p-my-1" [loading]="isLoading"></button>
+      </p-footer>
+    </p-panel>
+  </div>
+
+
+</div>
